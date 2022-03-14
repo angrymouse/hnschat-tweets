@@ -1,3 +1,4 @@
+var http = require("https");
 var WebSocket = require("ws");
 
 let session = "your session id";
@@ -17,8 +18,12 @@ socket.onmessage = function(e) {
 
 	switch (command) {
 		case "MESSAGE":
-			if (body.message === "!bot") {
-				reply(body, "Hi, I'm a bot.");
+			if (body.message === "!hns") {
+				let price = hnsPrice().then(function(price){
+					if (price) {
+						reply(body, "$"+price);
+					}
+				});
 			}
 			break;
 	}
@@ -39,4 +44,27 @@ function ws(command, body) {
 	socket.send(command+" "+JSON.stringify(body));
 }
 
+async function hnsPrice() {
+	let options = {
+		host: "api.coingecko.com",
+		path: "/api/v3/simple/price?ids=handshake&vs_currencies=usd",
+	}
 
+	let output = new Promise(function(resolve) {
+		http.get(options, function(r){
+			var response = '';
+			
+			r.on('data', function (chunk) {
+				response += chunk;
+			});
+			r.on('end', function () {
+				let json = JSON.parse(response);
+				resolve(json.handshake.usd);
+			});
+		}).on('error', function(e) {
+			resolve();
+		});
+	});
+
+	return await output;
+}
