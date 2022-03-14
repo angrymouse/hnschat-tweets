@@ -5,7 +5,7 @@ This is an example to get you started making bots for [hnschat](https://hns.chat
 ```
 git clone https://github.com/eskimo/hnschat-bot.git
 cd hnschat-bot
-npm install ws
+npm install ws https
 ```
 
 # How to use
