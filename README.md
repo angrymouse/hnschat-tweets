@@ -1,5 +1,5 @@
 # hnschat-bot
-This is an example to get your started making bots for [hnschat](https://hns.chat)
+This is an example to get you started making bots for [hnschat](https://hns.chat)
 
 # Setup
 ```
