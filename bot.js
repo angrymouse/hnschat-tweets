@@ -144,6 +144,7 @@ function streamConnect(retryAttempt) {
     stream.on('data', data => {
         try {
             const json = JSON.parse(data);
+            if(json.data.text.startsWith("RT")){return}
            reply({conversation:config.conversation},"https://twitter.com/twitter/status/"+json.data.id)
             // A successful connection resets retry count.
             retryAttempt = 0;
